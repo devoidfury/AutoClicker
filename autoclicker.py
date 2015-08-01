@@ -54,7 +54,8 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self,
             parent,
             title=title,
-            size=(400, 200))
+            size=(400, 200),
+            style=wx.DEFAULT_FRAME_STYLE|wx.STAY_ON_TOP)
 
         self.initialize_properties()
         self.build_ui()
