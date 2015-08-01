@@ -69,28 +69,41 @@ class MainFrame(wx.Frame):
     def build_ui(self):
         self.SetBackgroundColour("white")
 
-        self.freq_slider = wx.Slider(self, wx.ID_ANY,
+        self.freq_slider = wx.Slider(self,
             value=self.frequency,
             minValue=1,
             maxValue=3000, # any higher than this is unrealistic
-            pos=(10, 10),
-            size=(300, 50),
             style=wx.SL_HORIZONTAL | wx.SL_AUTOTICKS | wx.SL_LABELS)
-
         self.freq_slider.SetTickFreq(200)
 
-        self.debug_checkbox = wx.CheckBox(self, wx.ID_ANY,
-            label="Debug Mode",
-            pos=(10, 60))
+        self.debug_checkbox = wx.CheckBox(self, label="Debug Mode")
 
-        self.info_text = wx.StaticText(self, wx.ID_ANY, 
-            label="Hotkey: Alt+F1",
-            pos=(10, 80))
+        self.home_link = wx.HyperlinkCtrl(self,
+            label="[Homepage]",
+            url="https://github.com/devoidfury/AutoClicker")
 
-        self.home_link = wx.HyperlinkCtrl(self, wx.ID_ANY,
-            label="Homepage",
-            url="https://github.com/devoidfury/AutoClicker",
-            pos=(10, 100))
+        self.statusbar = self.CreateStatusBar(2, style=0)
+        self.statusbar.SetStatusText("Hotkey: Alt+F1", 0)
+        self.statusbar.SetStatusText("\t\tOFF", 1)
+
+        sizer = wx.FlexGridSizer(vgap=1, hgap=1, cols=1, rows=2)
+
+        padding = 3
+        box1 = wx.BoxSizer(wx.VERTICAL)
+        box1.Add(self.freq_slider, 0, wx.EXPAND|wx.ALL, padding)
+
+        box2 = wx.BoxSizer(wx.HORIZONTAL)
+        box2.Add(self.debug_checkbox, 1, wx.EXPAND|wx.ALL, padding)
+        box2.Add(self.home_link, 0, wx.ALIGN_RIGHT|wx.ALL, padding)
+
+        sizer.Add(box1, 1, wx.EXPAND | wx.ALL)
+        sizer.Add(box2, 0, wx.EXPAND)
+
+        sizer.AddGrowableRow(0)
+        sizer.AddGrowableCol(0)
+
+        self.SetSizerAndFit(sizer)
+        self.Fit()
 
     def register_hotkey(self):
         '''This function registers the hotkey Alt+F1'''
@@ -114,7 +127,9 @@ class MainFrame(wx.Frame):
             self.worker.abort()
             self.worker = None
 
-        print 'AutoClicker ON' if self.running else 'AutoClicker OFF'
+        state = 'ON' if self.running else 'OFF'
+        self.statusbar.SetStatusText('\t\t' + state, 1)
+        print 'AutoClicker ' + state
 
 
 class AutoClicker(wx.App):
