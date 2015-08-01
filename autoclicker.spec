@@ -1,6 +1,6 @@
 # -*- mode: python -*-
 a = Analysis(['autoclicker.py'],
-             pathex=['C:\\Users\\knightZeRo\\Dropbox\\GitHub\\AutoClicker'],
+             pathex=[os.path.dirname(os.path.realpath(__file__))],
              hiddenimports=[],
              hookspath=None,
              runtime_hooks=None)
@@ -14,4 +14,4 @@ exe = EXE(pyz,
           debug=False,
           strip=None,
           upx=True,
-          console=True )
+          console=True)
