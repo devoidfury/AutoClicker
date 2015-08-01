@@ -6,9 +6,9 @@ Super simple auto clicker that a friend wanted in python. compiled to exe with p
 Just select your click speed per seconed and press alt-F1
 
 
-Download binary:
+Download binary release:
 
-https://github.com/devoidfury/AutoClicker/blob/master/dist/autoclicker.exe?raw=true
+https://github.com/devoidfury/AutoClicker/releases
 
 OR
 
